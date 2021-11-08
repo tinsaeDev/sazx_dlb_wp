@@ -1,33 +1,100 @@
 <?php
+
 /**
  * Plugin Name: Direct Link Blocker
  * Plugin URI: https://tinsaebelay.github.io/
  * Description: Blocks direct access to your wordpress upload files.
- * Version:0.0.1
+ * Version:1.0.0
  * Author: Tinsae Belay
  * Author URI: https://tinsaebelay.github.io/
- * Text Domain: Blocker
- * Domain Path: /i18n/languages/
- * Requires at least: 5.6
+ * Requires at least: 5.0
  * Requires PHP: 7.0
  *
- * @package WooCommerce
+ * @package tinsae.sazx.dlb
  */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
-if ( ! defined( 'SAZX_DLB_PLUGIN_FILE' ) ) {
-	define( 'SAZX_DLB_PLUGIN_FILE', __FILE__ );
+if (!defined('SAZX_DLB_PLUGIN_FILE')) {
+	define('SAZX_DLB_PLUGIN_FILE', __FILE__);
 }
 
+register_activation_hook(__FILE__, function () {
 
-/**
- *? - During activation.
- *  	 - Create a page for downloader
- * 		 - Create a httaccess file inside uploads directory
- * 
- *? - During Deactivation.
- *  	 - delete the page  page for downloader
- * 		 - remove a httaccess file inside uploads directory
- * 
- */
+	/**
+	 * * Copy htaccess to uploads directory,
+	 * if there exist already, rename
+	 */
+
+	$uploads_dir = wp_upload_dir()["basedir"];
+	if (file_exists($uploads_dir . "/.htaccess")) {
+		/**
+		 * Backup the existing .htaccess file by renaming the file.
+		 */
+
+		$renamed = rename($uploads_dir . "/.htaccess", $uploads_dir . "/.htaccess" . ".sazxdlb");
+		if (!$renamed) {
+			die("Faild to backup existing htaccess file from " . $uploads_dir);
+			return false;
+		}
+	}
+
+	/**
+	 * Generate  the  htaccess rules
+	 */
+
+	 $file_sender_path =  __DIR__ . "/file_sender.php";
+	 $file  =  fopen(  $uploads_dir . "/.htaccess" ,'w');
+	 
+	 $rule = "RewriteEngine On\n";
+	 $rule .= "RewriteRule .* $file_sender_path";
+
+	 /**
+	  * 
+	  * Save the generated htaccess rule in uploads directory.
+	  */	 
+
+	 $saved = fwrite( $file, $rule );
+
+	// $copied = copy(__DIR__ . "/htaccess.file",  $uploads_dir . "/.htaccess");
+	if (!$saved) {
+		die("Faild to copy  htaccess file tp " . $uploads_dir);
+		return false;
+	}
+});
+
+register_deactivation_hook(__FILE__, function () {
+	
+	/**
+	 * delete htaccess file from uploads directory,
+	 * if a backup exist restore.
+	 */
+
+
+
+	/**
+	 * Delete the htaccess file that  used to redirected requests to uploads directory to a php script 
+	 */
+	$uploads_dir = wp_upload_dir()["basedir"];
+
+	if( file_exists( $uploads_dir . "/.htaccess" ) ){
+		$deleted = unlink(  $uploads_dir . "/.htaccess");
+		if (!$deleted) {
+			die("Faild to remove the  htaccess file from" . $uploads_dir);
+			return false;
+		}
+	}
+
+	if (file_exists( $uploads_dir . "/.htaccess" . ".sazxdlb")) {
+		/**
+		 * Backup the existing .htaccess file by renaming the file.
+		 */
+
+		$renamed = rename($uploads_dir . "/.htaccess" . ".sazxdlb", $uploads_dir . "/.htaccess",  );
+		if (!$renamed) {
+			die("Faild to backup existing htaccess file from " . $uploads_dir);
+			return false;
+		}
+	}
+
+});
