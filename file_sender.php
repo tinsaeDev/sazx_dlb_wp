@@ -65,7 +65,7 @@ function send_error( $code, $title, $message  ){
         </p>
         
         <hr/>
-        <p> <em> This website is protected by, <a href="#"> SAZX Blocker </a> 2021   </em>  </p>
+        <p> <em> This website is protected from hotlinking  by, <a href="#"> SAZX Hotlink Blocker </a> 2021   </em>  </p>
 
     <?php
     http_response_code( $code );

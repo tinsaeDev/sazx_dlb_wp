@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Plugin Name: Direct Link Blocker
+ * Plugin Name: 	Sazx Hot Link Blocker
  * Plugin URI: https://tinsaebelay.github.io/
- * Description: Blocks direct access to your wordpress upload files.
+ * Description: Blocks hotlinks to your WordPress uploaded files.
  * Version:1.0.0
  * Author: Tinsae Belay
  * Author URI: https://tinsaebelay.github.io/
