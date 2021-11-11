@@ -3,7 +3,7 @@
 /**
  * Plugin Name: 	Sazx Hot Link Blocker
  * Plugin URI: https://tinsaebelay.github.io/
- * Description: Blocks hotlinks to your WordPress uploaded files.
+ * Description: Blocks all hotlinks to your uploaded files.
  * Version:1.0.0
  * Author: Tinsae Belay
  * Author URI: https://tinsaebelay.github.io/
