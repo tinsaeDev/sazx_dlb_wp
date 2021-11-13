@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Plugin Name: 	Sazx Hot Link Blocker
- * Plugin URI: https://tinsaebelay.github.io/
+ * Plugin Name: Sazx Hot Link Blocker
+ * Plugin URI: https://tinsaebelay.github.io/?hlb
  * Description: Blocks all hotlinks to your uploaded files.
  * Version:1.0.0
  * Author: Tinsae Belay
