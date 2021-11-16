@@ -1,5 +1,8 @@
 <?php
 
+
+namespace sazx;
+
 /**
  * Plugin Name: Sazx Hot Link Blocker
  * Plugin URI: https://tinsaebelay.github.io/?hlb

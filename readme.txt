@@ -26,7 +26,7 @@ Once the Sazx Hotlink Blocker is installed go to your WordPress admin dahsboard 
 
 == Frequently Asked Questions ==
 
-= How does HFP work?
+= How does Sazx Hotlink Blocker work?
 
 Sazx Hotlink Blocker creates an Apache `.htaccess` file in the `wp-content/uploads` directory.  the .htaccess file will redirect all medua downloads to 
 

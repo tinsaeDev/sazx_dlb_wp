@@ -1,11 +1,12 @@
 <?php
 
+namespace sazx;
 
 /**
  * 
  * Accepts a file to be sent to the browser
  */
-function send_file($fileName){
+function sazx_hlb_send_file($fileName){
 
     $filesize = filesize($fileName);
     $offset = 0;
@@ -55,13 +56,13 @@ function send_file($fileName){
 }
 
 
-function send_error( $code, $title, $message  ){
+function sazx_hlb_send_error( $code, $title, $message  ){
     ?> 
         <h1>
-            <?php  echo $title; ?>
+            <?php  echo  htmlspecialchars( $title ); ?>
         </h1>
         <p>
-            <?php  echo $message; ?>
+            <?php  echo htmlspecialchars( $message ); ?>
         </p>
         
         <hr/>
@@ -77,7 +78,7 @@ function send_error( $code, $title, $message  ){
  */
 $http_referer = $_SERVER["HTTP_REFERER"];
 if (!$http_referer) {    
-    send_error( 403, "Not allowed", "Direct access to the resource is not allowed"  );
+    sazx_hlb_send_error( 403, "Not allowed", "Direct access to the resource is not allowed"  );
 }
 
 
@@ -89,7 +90,7 @@ $url = parse_url($http_referer);
 $http_referer_host =  $url["host"];
 
 if ($_SERVER["HTTP_HOST"] !== $http_referer_host) {
-    send_error( 403, " Not allowed", "Your request is rejected for being requested from different host"  );
+    sazx_hlb_send_error( 403, " Not allowed", "Your request is rejected for being requested from different host"  );
 }
 
 
@@ -101,7 +102,7 @@ $document_root = $_SERVER["DOCUMENT_ROOT"];
 $redirect_uri =   $_SERVER["REDIRECT_URL"];
 
 if (!$redirect_uri) {
-    send_error( 505, "Internal Error", "Internal error occured while trying to process your request" );
+    sazx_hlb_send_error( 505, "Internal Error", "Internal error occured while trying to process your request" );
 }
 
 $fileName = $document_root . $redirect_uri;
@@ -113,7 +114,7 @@ $fileName = $document_root . $redirect_uri;
  */
 
 if (!file_exists($fileName)) {
-    send_error( 505, "File not found", "The requested file is not found on this server" );
+    sazx_hlb_send_error( 505, "File not found", "The requested file is not found on this server" );
 }
 
 
@@ -121,5 +122,4 @@ if (!file_exists($fileName)) {
  * Send the file
  */
 
-send_file( $fileName );
-exit;
+sazx_hlb_send_file( $fileName );
